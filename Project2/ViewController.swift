@@ -18,13 +18,20 @@ class ViewController: UIViewController {
     var correctAnswer = 0
     var round = 0
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        fillCountriesArray()
+        prepareButtons()
+        askQuestion()
+    }
+    
+    fileprivate func fillCountriesArray() {
         
         countries += ["estonia","france","germany","ireland","italy","monaco","nigeria","poland","russia","spain","uk","us"]
-        
+    }
+    
+    fileprivate func prepareButtons() {
         buttonOne.layer.borderWidth = 1
         buttonTwo.layer.borderWidth = 1
         buttonThree.layer.borderWidth = 1
@@ -32,20 +39,21 @@ class ViewController: UIViewController {
         buttonOne.layer.borderColor = UIColor.lightGray.cgColor
         buttonTwo.layer.borderColor = UIColor.lightGray.cgColor
         buttonThree.layer.borderColor = UIColor.lightGray.cgColor
-        
-        askQuestion()
     }
     
     func askQuestion(action: UIAlertAction! = nil) {
         round += 1
         countries.shuffle()
         correctAnswer = Int.random(in: 0...2)
+        title = countries[correctAnswer].uppercased() + " - Score: \(score) - Round \(round)"
         
+        setButtonImages()
+    }
+    
+    fileprivate func setButtonImages() {
         buttonOne.setImage(UIImage(named:countries[0]), for: .normal)
         buttonTwo.setImage(UIImage(named:countries[1]), for: .normal)
         buttonThree.setImage(UIImage(named:countries[2]), for: .normal)
-        
-        title = countries[correctAnswer].uppercased() + " - Score: \(score) - Round \(round)"
     }
     
     
@@ -73,8 +81,10 @@ class ViewController: UIViewController {
             ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: askQuestion))
         }
         
-        present(ac,animated: true)
+        present(ac , animated: true)
     }
+    
+    
     
 }
 
